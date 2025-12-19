@@ -6,8 +6,8 @@
         x:Class="TicTacToeGUI.MainWindow"
         Title="Крестики-Нолики"
         Width="480"
-        Height="620"
-        MinWidth="480"
+        Height="650"
+        MinWidth="650"
         MinHeight="620">
     
     <!-- УПРОЩЕННЫЕ СТИЛИ БЕЗ ПРОБЛЕМНЫХ ТРАНЗИЦИЙ -->
