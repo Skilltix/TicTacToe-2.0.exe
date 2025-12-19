@@ -1,0 +1,3 @@
+Запустить можно через powershell
+cd C:\Users\User\Desktop\игра\bin\Release\net9.0\win-x64\publish или укажите свой путь
+.\TicTacToeGUI.exe запуск

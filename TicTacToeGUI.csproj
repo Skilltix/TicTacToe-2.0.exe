@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Базовые настройки -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework> <!-- Оставляем net9.0, как у тебя -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Информация о приложении -->
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <AssemblyName>TicTacToe</AssemblyName>
+    <RootNamespace>TicTacToe</RootNamespace>
+    <Version>1.0.0</Version>
+    <Company>YourName</Company>
+    <Product>TicTacToe Game</Product>
+    <Authors>YourName</Authors>
+    <Description>Simple Tic Tac Toe game made in C# (Avalonia UI)</Description>
+
+     <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    
+    <!-- Убрать файлы отладки -->
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Зависимости Avalonia -->
+    <PackageReference Include="Avalonia" Version="11.0.0-rc2.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-rc2.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-rc2.1" />
+
+    <PackageReference Include="System.Windows.Extensions" Version="9.0.0" />
+  </ItemGroup>
+  
+</Project>
+

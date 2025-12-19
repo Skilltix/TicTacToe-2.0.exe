@@ -1,0 +1,14 @@
+<Application xmlns="https://github.com/avaloniaui"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+             xmlns:fluent="clr-namespace:Avalonia.Themes.Fluent;assembly=Avalonia.Themes.Fluent"  
+             x:Class="TicTacToeGUI.App">  <!-- Указывает класс C# (код-цель), связанный с этим файлом, обычно он содержит бизнес-логику и настройки приложения -->
+             
+  <Application.Styles>  <!-- Этот раздел управляет стилями и темами, применяемыми по всему приложению -->
+  
+    <!-- В этом блоке подключается тема Fluent UI, которая обеспечивает современный стиль оформления интерфейса -->
+    <!-- Без указания свойства Mode или RequestedThemeVariant используется тема по умолчанию (обычно светлая) -->
+    
+    <fluent:FluentTheme/>  <!-- Внедрение темы Fluent из пространства имен "fluent" -->
+    
+  </Application.Styles>
+</Application>

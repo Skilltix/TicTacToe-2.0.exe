@@ -1,0 +1,261 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="TicTacToeGUI.MainWindow"
+        Title="Крестики-Нолики"
+        Width="480"
+        Height="620"
+        MinWidth="480"
+        MinHeight="620">
+    
+    <!-- УПРОЩЕННЫЕ СТИЛИ БЕЗ ПРОБЛЕМНЫХ ТРАНЗИЦИЙ -->
+    <Window.Styles>
+        <!-- Базовый стиль для всех кнопок -->
+        <Style Selector="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        
+        <!-- Стиль для кнопок управления -->
+        <Style Selector="Button.control-button">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="12,8"/>
+        </Style>
+        
+        <!-- Эффект при наведении на кнопки управления -->
+        <Style Selector="Button.control-button:hover">
+            <Setter Property="Opacity" Value="0.95"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        
+        <!-- Эффект при нажатии -->
+        <Style Selector="Button.control-button:pressed">
+            <Setter Property="Opacity" Value="0.9"/>
+        </Style>
+        
+        <!-- Стиль для игровых кнопок (поле 3x3) -->
+        <Style Selector="Button.game-cell">
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        
+        <!-- Эффект при наведении на игровые кнопки -->
+        <Style Selector="Button.game-cell:hover">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <Style Selector="Button.sound">
+                <Setter Property="Background" Value="#F39C12"/>
+        </Style>
+        <!-- Специальные стили для каждой кнопки управления -->
+        <Style Selector="Button.new-game">
+            <Setter Property="Background" Value="#2E86C1"/>
+        </Style>
+        
+        <Style Selector="Button.reset-score">
+            <Setter Property="Background" Value="#E74C3C"/>
+        </Style>
+        
+        <Style Selector="Button.difficulty">
+            <Setter Property="Background" Value="#8E44AD"/>
+        </Style>
+        
+        <Style Selector="Button.mode">
+            <Setter Property="Background" Value="#27AE60"/>
+        </Style>
+    </Window.Styles>
+    
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" 
+                   Text="КРЕСТИКИ-НОЛИКИ" 
+                   FontSize="22" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,15"
+                   Foreground="#2C3E50"/>
+        
+        <!-- Статистика -->
+        <Border Grid.Row="1" 
+                Background="#ECF0F1" 
+                CornerRadius="8" 
+                Padding="10" 
+                Margin="0,0,0,15"
+                BorderBrush="#BDC3C7"
+                BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                    <TextBlock Text="Крестики" FontSize="13" Foreground="#E74C3C" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="ScoreX" Text="0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock Text="Нолики" FontSize="13" Foreground="#3498DB" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="ScoreO" Text="0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                    <TextBlock Text="Ничьи" FontSize="13" Foreground="#7F8C8D" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="Draws" Text="0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- Индикатор хода и уровня сложности -->
+        <Border Grid.Row="2" 
+                Background="#F8F9FA" 
+                BorderBrush="#DEE2E6" 
+                BorderThickness="1" 
+                CornerRadius="6" 
+                Padding="12" 
+                Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock x:Name="TurnLabel" 
+                          Text="Ходят крестики" 
+                          FontSize="16" 
+                          FontWeight="SemiBold" 
+                          HorizontalAlignment="Center"/>
+                
+                <TextBlock x:Name="DifficultyLabel"
+                          Text="Уровень ИИ: Средний"
+                          FontSize="12"
+                          Foreground="#7F8C8D"
+                          HorizontalAlignment="Center"
+                          Margin="0,5,0,0"
+                          FontStyle="Italic"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Игровое поле -->
+        <Grid Grid.Row="3" 
+              HorizontalAlignment="Center" 
+              VerticalAlignment="Center"
+              Margin="0,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Кнопки игрового поля -->
+            <Button x:Name="B1" Grid.Row="0" Grid.Column="0" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+            <Button x:Name="B2" Grid.Row="0" Grid.Column="1" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+            <Button x:Name="B3" Grid.Row="0" Grid.Column="2" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+            
+            <Button x:Name="B4" Grid.Row="1" Grid.Column="0" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+            <Button x:Name="B5" Grid.Row="1" Grid.Column="1" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+            <Button x:Name="B6" Grid.Row="1" Grid.Column="2" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+            
+            <Button x:Name="B7" Grid.Row="2" Grid.Column="0" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+            <Button x:Name="B8" Grid.Row="2" Grid.Column="1" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+            <Button x:Name="B9" Grid.Row="2" Grid.Column="2" 
+                    Classes="game-cell"
+                    Width="80" Height="80" Margin="2"/>
+        </Grid>
+        
+        <!-- Панель управления -->
+        <StackPanel Grid.Row="4" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,15,0,20" 
+                    Spacing="10">
+            
+            <Button x:Name="NewGameButton" 
+                    Classes="control-button new-game"
+                    Content="🔄 Новая" 
+                    Width="100"
+                    Click="NewGame_Click"
+                    ToolTip.Tip="Начать новую игру"/>
+            
+            <Button x:Name="ResetScoreButton" 
+                    Classes="control-button reset-score"
+                    Content="📊 Сбросить" 
+                    Width="100"
+                    Click="ResetScore_Click"
+                    ToolTip.Tip="Сбросить счет"/>
+            
+            <Button x:Name="DifficultyButton" 
+                    Classes="control-button difficulty"
+                    Content="⚙️ Уровень" 
+                    Width="100"
+                    Click="DifficultyButton_Click"
+                    ToolTip.Tip="Изменить уровень сложности ИИ"/>
+            
+            <Button x:Name="ModeButton" 
+                    Classes="control-button mode"
+                    Content="👥 Режим" 
+                    Width="100"
+                    Click="ModeButton_Click"
+                    ToolTip.Tip="Переключить режим игры"/>
+             <Button x:Name="SoundButton" 
+                         Classes="control-button sound"
+            Content="🔊 Звук" 
+            Width="90"
+            Click="SoundButton_Click"
+            ToolTip.Tip="Включить/выключить звук"/>
+        </StackPanel>
+        
+        <!-- Об авторе -->
+        <Border Grid.Row="5"
+                Background="#F8F9FA"
+                CornerRadius="5"
+                Padding="8"
+                Margin="0,10,0,0">
+            <TextBlock Text="Разработчик: Азизбаев Камиль" 
+                      FontSize="12" 
+                      Foreground="#7F8C8D"
+                      HorizontalAlignment="Center"
+                      FontStyle="Italic"/>
+        </Border>
+    </Grid>
+</Window>
+
+
